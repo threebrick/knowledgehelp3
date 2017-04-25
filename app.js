@@ -16,11 +16,14 @@ server.listen(process.env.port || process.env.PORT || 3978, function () {
   
 // Create chat bot
 var connector = new builder.ChatConnector({
- appId: process.env.MICROSOFT_APP_ID,
- appPassword: process.env.MICROSOFT_APP_PASSWORD
+    appId: '6c6ce865-88e7-4445-86dc-6bf74befd89f',
+    appPassword: 'OpjSmvMw33YrLhwQsHC6U62'
+ //appId: process.env.MICROSOFT_APP_ID,
+ //appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
 var bot = new builder.UniversalBot(connector);
-server.post('/api/messages', connector.listen());
+//server.post('/api/messages', connector.listen());
+server.post('https://knowledgehelp3.azurewebsites.net/api/messages', connector.listen());
 
 
 
@@ -216,10 +219,10 @@ bot.dialog('/faqfailure', [
             .attachments([
                 new builder.HeroCard(session)
                     
-                    .text("Would you like to 'Search again', return to the 'Main Menu' or 'Speak to an Advisor'?")
+                    .text("Would you like to 'Search Again', return to the 'Main Menu' or 'Speak to an Advisor'?")
                     
                     .buttons([
-                        builder.CardAction.dialogAction(session, "PreFAQs", null, "Search again"),
+                        builder.CardAction.dialogAction(session, "PreFAQs", null, "Search Again"),
                         builder.CardAction.dialogAction(session, "menu", null, "Main Menu"),
                         
                         builder.CardAction.dialogAction(session, "speaktoadvisor", null, "Speak to an Advisor")
@@ -2066,3 +2069,8 @@ bot.beginDialogAction('howtohelp', '/howtohelp');
 
 
 // END Questnet FLOW 
+
+server.get('/', restify.serveStatic({
+ directory: __dirname,
+ default: '/index.html'
+}));
