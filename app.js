@@ -25,6 +25,24 @@ var bot = new builder.UniversalBot(connector);
 //server.post('/api/messages', connector.listen());
 server.post('https://knowledgehelp3.azurewebsites.net/api/messages', connector.listen());
 
+//=========================================================
+//Bot Metrics
+//=========================================================
+
+var BotmetricsMiddleware = require('botmetrics-botframework-middleware').BotmetricsMiddleware({
+  //botId: process.env.BOTMETRICS_BOT_ID,
+  //apiKey: process.env.BOTMETRICS_API_KEY
+  apiKey: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo0NjgsImV4cCI6MTgwNzQ5MTk1N30.eVQscEUJPNMhi-_h23unO8yben5uLAS5aXxBC4rDbs4",
+  botId: "f75316128039"
+});
+
+// Use the middleware
+bot.use(
+  {
+    receive: BotmetricsMiddleware.receive,
+    send: BotmetricsMiddleware.send
+  }
+);
 
 
 //=========================================================
@@ -55,6 +73,8 @@ var basicQnAMakerDialog = new cognitiveservices.QnAMakerDialog({
 bot.endConversationAction('goodbye', 'Goodbye :)', { matches: /^goodbye/i });
 bot.beginDialogAction('help', '/help', { matches: /^help/i });
 bot.beginDialogAction('menu', '/menu', { matches: /^menu|show menu|main menu/i });
+bot.beginDialogAction('search', '/search', { matches: /^search|search again/i });
+
 
 //=========================================================
 // Bots Dialogs
@@ -127,14 +147,18 @@ bot.dialog('/speaktoadvisor', [
 ]);
 bot.beginDialogAction('speaktoadvisor', '/speaktoadvisor'); 
 
-
+bot.dialog('/search', [
+    function (session) {
+        
+        session.beginDialog('/FAQs*');
+    }
+]).reloadAction('reloadSearch', null, { matches: /^search|search again/i });   
 
 
 
 bot.dialog('/FAQs*', basicQnAMakerDialog);
 //bot.beginDialogAction('FAQs', '/FAQs'); 
-bot.beginDialogAction('FAQs*', '/FAQs*'); 
-
+bot.beginDialogAction('FAQs*', '/FAQs*');
 
 bot.dialog('/faqhelp', [
     function (session) {
