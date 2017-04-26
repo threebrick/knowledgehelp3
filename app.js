@@ -29,20 +29,31 @@ server.post('https://knowledgehelp3.azurewebsites.net/api/messages', connector.l
 //Bot Metrics
 //=========================================================
 
-var BotmetricsMiddleware = require('botmetrics-botframework-middleware').BotmetricsMiddleware({
+//var BotmetricsMiddleware = require('botmetrics-botframework-middleware').BotmetricsMiddleware({
   //botId: process.env.BOTMETRICS_BOT_ID,
   //apiKey: process.env.BOTMETRICS_API_KEY
-  apiKey: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo0NjgsImV4cCI6MTgwNzQ5MTk1N30.eVQscEUJPNMhi-_h23unO8yben5uLAS5aXxBC4rDbs4",
-  botId: "f75316128039"
-});
+//  apiKey: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo0NjgsImV4cCI6MTgwNzQ5MTk1N30.eVQscEUJPNMhi-_h23unO8yben5uLAS5aXxBC4rDbs4",
+//  botId: "f75316128039"
+//});
 
 // Use the middleware
-bot.use(
-  {
-    receive: BotmetricsMiddleware.receive,
-    send: BotmetricsMiddleware.send
-  }
-);
+//bot.use(
+ // {
+ //   receive: BotmetricsMiddleware.receive,
+ //   send: BotmetricsMiddleware.send
+ // }
+//);
+
+// only include tokens for the platforms that you support
+const dashbotApiMap = {
+  
+  webchat: 'y7yja1LzSDmS0OJg2nDGEIEpScuMIYNuxgFO9mFR'
+  
+}
+
+const dashbot = require('dashbot')(dashbotApiMap).microsoft
+//dashbot.setFacebookToken(process.env.FACEBOOK_PAGE_TOKEN) // only needed for Facebook Bots
+bot.use(dashbot)
 
 
 //=========================================================
