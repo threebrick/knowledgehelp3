@@ -96,11 +96,11 @@ bot.dialog('/', [
     function (session) {
         // Send a greeting and show help.
         var card = new builder.HeroCard(session)
-            .title("Knowledge Help Bot")
+       //     .title("Knowledge Help Bot")
            // .text("Your bots - wherever your users are talking.")
-            .images([
-                 builder.CardImage.create(session, "http://www.blocally.com/bots/ey/techsupport/ey_logo.png")
-            ]);
+      //      .images([
+      //           builder.CardImage.create(session, "http://www.blocally.com/bots/ey/techsupport/ey_logo.png")
+      //      ]);
         var msg = new builder.Message(session).attachments([card]);
         session.send(msg);
         session.send("Hi... I'm a virtual member of the Knowledge Help team.  I'm an expert on our Knowledge tools.");
