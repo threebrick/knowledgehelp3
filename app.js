@@ -184,7 +184,7 @@ bot.dialog('/initialquestions2', [
     function (session, results) {
    //    session.send("You entered '%s'", results.response);
 
-        if (results.response == 'yes') {
+        if (results.response == 'yes' || results.response == 'Yes' || results.response == 'YES' ) {
             session.replaceDialog('/FAQs*');
         } else {
             session.send("I will now return you to the main menu");
