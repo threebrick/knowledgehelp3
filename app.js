@@ -197,7 +197,7 @@ bot.beginDialogAction('initialquestions2', '/initialquestions2');
 
 bot.dialog('/speaktoadvisor', [
     function (session) {
-        builder.Prompts.text(session, "I have access to a lot of the same information that our Knowledge Help team do, but if you'd rather deal with a human I understand.  Your local Knowledge Help team are available during business hours via a range of channels http://www.google.com.");
+        builder.Prompts.text(session, "I have access to a lot of the same information that our Knowledge Help team do, but if you'd rather deal with a human I understand.  Your local Knowledge Help team are available during business hours via a range of channels http://chs.ey.net/knowledgehelp.");
     }
 ]);
 bot.beginDialogAction('speaktoadvisor', '/speaktoadvisor'); 
