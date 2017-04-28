@@ -26,28 +26,16 @@ var bot = new builder.UniversalBot(connector);
 server.post('https://knowledgehelp3.azurewebsites.net/api/messages', connector.listen());
 
 //=========================================================
-//Bot Metrics
+//Dash Bot Metrics
 //=========================================================
 
-//var BotmetricsMiddleware = require('botmetrics-botframework-middleware').BotmetricsMiddleware({
-  //botId: process.env.BOTMETRICS_BOT_ID,
-  //apiKey: process.env.BOTMETRICS_API_KEY
-//  apiKey: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo0NjgsImV4cCI6MTgwNzQ5MTk1N30.eVQscEUJPNMhi-_h23unO8yben5uLAS5aXxBC4rDbs4",
-//  botId: "f75316128039"
-//});
 
-// Use the middleware
-//bot.use(
- // {
- //   receive: BotmetricsMiddleware.receive,
- //   send: BotmetricsMiddleware.send
- // }
-//);
 
 // only include tokens for the platforms that you support
 const dashbotApiMap = {
   
-  webchat: 'y7yja1LzSDmS0OJg2nDGEIEpScuMIYNuxgFO9mFR'
+//  webchat: 'y7yja1LzSDmS0OJg2nDGEIEpScuMIYNuxgFO9mFR'
+    webchat: 'JJlvf8VMhOfYhnIdXJ2zay3QdYAiPz6hR1kgIyjf'
   
 }
 
@@ -81,7 +69,7 @@ var basicQnAMakerDialog = new cognitiveservices.QnAMakerDialog({
 // Bots Global Actions
 //=========================================================
 
-bot.endConversationAction('goodbye', 'Goodbye :)', { matches: /^goodbye/i });
+bot.endConversationAction('goodbye', 'Thanks you for using the Knowledge Help Bot. Goodbye :)', { matches: /^goodbye/i });
 bot.beginDialogAction('help', '/help', { matches: /^help/i });
 bot.beginDialogAction('menu', '/menu', { matches: /^menu|show menu|main menu/i });
 bot.beginDialogAction('search', '/search', { matches: /^search|search again/i });
@@ -124,14 +112,32 @@ bot.dialog('/menu', [
  function (session) {
 
           
-
-        session.beginDialog('/initialquestions');
+        
+            session.beginDialog('/initialquestions');
+     
+   //     session.beginDialog('/FAQs*');
 
     }
     
     
 
 ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu|main menu/i });   
+
+bot.dialog('/search', [
+    
+ function (session) {
+
+          
+       //     session.replaceDialog('/test');
+           session.beginDialog('/initialquestions2');
+     
+     //   session.beginDialog('/FAQs*');
+
+    }
+    
+    
+
+]).reloadAction('reloadSearch', null, { matches: /^search|search again/i }); 
 
  
 
@@ -151,6 +157,44 @@ bot.dialog('/initialquestions', [
 ]);
 bot.beginDialogAction('initialquestions', '/initialquestions'); 
 
+//bot.dialog('/initialquestions2', [
+//    function (session) {
+//        builder.Prompts.choice(session, "Are you sure that you want to search again", "Yes|No");
+//    },
+//    function (session, results) {
+//        if (results.response && results.response.entity == 'Yes') {
+//            // Launch demo dialog
+ //           console.log('Entity - ' + results.response.entity);
+ //           console.log('Response - ' + results.response);
+ //           session.beginDialog('/FAQs*');
+ //       } else {
+ //           // Exit the menu
+ //           session.endDialog();
+ //       }
+ //   }
+//]);
+//bot.beginDialogAction('initialquestions2', '/initialquestions2'); 
+
+bot.dialog('/initialquestions2', [
+    function (session) {
+        
+        
+        builder.Prompts.text(session, "Are you sure that you would like to search again? Answer yes or no.");
+    },
+    function (session, results) {
+   //    session.send("You entered '%s'", results.response);
+
+        if (results.response == 'yes') {
+            session.replaceDialog('/FAQs*');
+        } else {
+            session.send("I will now return you to the main menu");
+            session.replaceDialog('/menu');
+        }
+
+    }
+]);
+bot.beginDialogAction('initialquestions2', '/initialquestions2');
+
 bot.dialog('/speaktoadvisor', [
     function (session) {
         builder.Prompts.text(session, "I have access to a lot of the same information that our Knowledge Help team do, but if you'd rather deal with a human I understand.  Your local Knowledge Help team are available during business hours via a range of channels http://www.google.com.");
@@ -158,14 +202,35 @@ bot.dialog('/speaktoadvisor', [
 ]);
 bot.beginDialogAction('speaktoadvisor', '/speaktoadvisor'); 
 
-bot.dialog('/search', [
+//bot.dialog('/search', [
+//    function (session) {
+     //   session.userData.search = "yes";
+
+ //       delete session.dialogData.qnaMakerTools;
+        //delete session.dialogData;
+        //delete session.dialogData.qnaMakerResult;
+
+      //  session.endDialog('BotBuilder:Prompts');
+//        session.endDialog();
+//        session.beginDialog('/test');
+//    }
+//]).triggerAction({ matches: /^search|search again/i });   
+
+bot.dialog('/test', [
     function (session) {
-        
-        session.beginDialog('/FAQs*');
+        builder.Prompts.choice(session, "Are you sure that you want to search again?:", "Search again|Main Menu");
+    },
+    function (session, results) {
+        if (results.response && results.response.entity == 'Search again') {
+            // Launch demo dialog
+            session.beginDialog('/FAQs*');
+        } else {
+            // Exit the menu
+            session.endDialog();
+        }
     }
-]).reloadAction('reloadSearch', null, { matches: /^search|search again/i });   
-
-
+]);
+bot.beginDialogAction('test', '/test'); 
 
 bot.dialog('/FAQs*', basicQnAMakerDialog);
 //bot.beginDialogAction('FAQs', '/FAQs'); 
