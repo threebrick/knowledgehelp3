@@ -21,6 +21,7 @@
     "botbuilder-cognitiveservices": "^1.0.1",
     "botmetrics-botframework-middleware": "0.0.1",
     "dashbot": "^0.8.6",
-    "restify": "^4.3.0"
+    "restify": "^4.3.0",
+    "sendgrid": "^5.1.0"
   }
 }

@@ -3,6 +3,7 @@ var restify = require('restify');
 var builder = require('botbuilder');
 var cognitiveservices = require('botbuilder-cognitiveservices');
 var customQnAMakerTools = require('./CustomQnAMakerTools');
+var helper = require('sendgrid').mail;
 
 //=========================================================
 // Bot Setup
@@ -16,14 +17,14 @@ server.listen(process.env.port || process.env.PORT || 3978, function () {
   
 // Create chat bot
 var connector = new builder.ChatConnector({
-    appId: '6c6ce865-88e7-4445-86dc-6bf74befd89f',
-    appPassword: 'OpjSmvMw33YrLhwQsHC6U62'
- //appId: process.env.MICROSOFT_APP_ID,
- //appPassword: process.env.MICROSOFT_APP_PASSWORD
+    //appId: '6c6ce865-88e7-4445-86dc-6bf74befd89f',
+    //appPassword: 'OpjSmvMw33YrLhwQsHC6U62'
+ appId: process.env.MICROSOFT_APP_ID,
+ appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
 var bot = new builder.UniversalBot(connector);
-//server.post('/api/messages', connector.listen());
-server.post('https://knowledgehelp3.azurewebsites.net/api/messages', connector.listen());
+server.post('/api/messages', connector.listen());
+//server.post('https://knowledgehelp3.azurewebsites.net/api/messages', connector.listen());
 
 //=========================================================
 //Dash Bot Metrics
@@ -259,7 +260,7 @@ bot.dialog('/faqhelp', [
 ]);
 bot.beginDialogAction('faqhelp', '/faqhelp'); 
 
-
+ 
 bot.dialog('/faqsuccess', [
     function (session) {
 
@@ -836,6 +837,35 @@ bot.beginDialogAction('requestsubmit', '/requestsubmit');   // <-- no 'matches' 
 bot.dialog('/sendemailrequest', [
     
     function (session) {
+
+
+        // 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
+        // using SendGrid's v3 Node.js Library
+// https://github.com/sendgrid/sendgrid-nodejs
+//var helper = require('sendgrid').mail;
+var fromEmail = new helper.Email('' + session.userData.email + '');
+var toEmail = new helper.Email('rkeitch@uk.ey.com');
+var subject = 'Knowledge Help Bot Email';
+var content = new helper.Content('text/plain', 'Request ID - '+ session.userData.requestid);
+var mail = new helper.Mail(fromEmail, subject, toEmail, content);
+
+var sg = require('sendgrid')('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');
+var request = sg.emptyRequest({
+  method: 'POST',
+  path: '/v3/mail/send',
+  body: mail.toJSON()
+});
+
+sg.API(request, function (error, response) {
+  if (error) {
+    console.log('Error response received');
+  }
+  console.log(response.statusCode);
+  console.log(response.body);
+  console.log(response.headers);
+});
+
+
         var msg = new builder.Message(session)
             .textFormat(builder.TextFormat.xml)
             .attachments([
@@ -1265,6 +1295,29 @@ bot.dialog('/shouldwesubmit2', [
     
     function (session) {
 
+// Send Email
+var fromEmail = new helper.Email('' + session.userData.email + '');
+var toEmail = new helper.Email('rkeitch@uk.ey.com');
+//var toEmail = new helper.Email('darnell.clayton2010@gmail.com');
+var subject = 'Knowledge Help Bot Email - One Person';
+var content = new helper.Content('text/plain', 'Company Name - '+ session.userData.companyname +', Name - ' + session.userData.name + ', Email Address - ' + session.userData.email + ', Job Title - ' + session.userData.jobtitle + ', Contact Number - ' + session.userData.contactnumber + ', Tools - '+ session.userData.tools);
+var mail = new helper.Mail(fromEmail, subject, toEmail, content);
+
+var sg = require('sendgrid')('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');
+var request = sg.emptyRequest({
+  method: 'POST',
+  path: '/v3/mail/send',
+  body: mail.toJSON()
+});
+
+sg.API(request, function (error, response) {
+  if (error) {
+    console.log('Error response received');
+  }
+  console.log(response.statusCode);
+  console.log(response.body);
+  console.log(response.headers);
+});
 
         var msg = new builder.Message(session)
             .textFormat(builder.TextFormat.xml)
@@ -1911,6 +1964,30 @@ bot.beginDialogAction('sendemail', '/sendemail');
 
 bot.dialog('/urgentacrachargecodequestions', [
     function (session) {
+// Urgent
+// Send Email
+var fromEmail = new helper.Email('' + session.userData.email + '');
+var toEmail = new helper.Email('rkeitch@uk.ey.com');
+//var toEmail = new helper.Email('darnell.clayton2010@gmail.com');
+var subject = 'Knowledge Help Bot Email - Questnet Account Request - Urgent';
+var content = new helper.Content('text/plain', 'Email Address - '+ session.userData.email +', Phone Number - ' + session.userData.phonenumber + ', Charge Code - ' + session.userData.chargecode);
+var mail = new helper.Mail(fromEmail, subject, toEmail, content);
+
+var sg = require('sendgrid')('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');
+var request = sg.emptyRequest({
+  method: 'POST',
+  path: '/v3/mail/send',
+  body: mail.toJSON()
+});
+
+sg.API(request, function (error, response) {
+  if (error) {
+    console.log('Error response received');
+  }
+  console.log(response.statusCode);
+  console.log(response.body);
+  console.log(response.headers);
+});
         session.send("Please provde a few details to help us locate the documents you need while you wait for the vendor to set up your license.");
         session.beginDialog('/acrachargecodequestions');
     }
@@ -2004,15 +2081,21 @@ bot.dialog('/acraticketsubmit', [
     
     function (session) {
 
-//var transporter = nodemailer.createTransport();
+// ACRA registration/entity number'
+// Send Email
+var fromEmail = new helper.Email('' + session.userData.email + '');
+var toEmail = new helper.Email('rkeitch@uk.ey.com');
+//var toEmail = new helper.Email('darnell.clayton2010@gmail.com');
+var subject = 'Knowledge Help Bot Email - Questnet Account Request - ACRA registration/entity number';
+var content = new helper.Content('text/plain', 'Charge Code - '+ session.userData.singmachargecode +', ACRA Registration Number - ' + session.userData.acraregistration);
+var mail = new helper.Mail(fromEmail, subject, toEmail, content);
 
-//transporter.sendMail({
-//   from: 'darnell@threebrick.com',
-//   to: 'darnell.clayton@ey.com',
-//   subject: 'hello',
-//   html: '<b>hello world!</b>',
-//   text: 'hello world!'
-//});
+var sg = require('sendgrid')('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');
+var request = sg.emptyRequest({
+  method: 'POST',
+  path: '/v3/mail/send',
+  body: mail.toJSON()
+});
 
 
         session.send("These requests are handled Monday-Wednesday 9:00am-3:30pm and Thursday 09:00- 11:30am (Sydney time). If your query is urgent and outside of these times please contact Knowledge Help quoting message ‘urgent-questnet-bot’.");
@@ -2098,6 +2181,22 @@ bot.dialog('/waitforaccount', [
     
     
     function (session) {
+
+// Wait
+// Send Email
+var fromEmail = new helper.Email('' + session.userData.email + '');
+var toEmail = new helper.Email('rkeitch@uk.ey.com');
+//var toEmail = new helper.Email('darnell.clayton2010@gmail.com');
+var subject = 'Knowledge Help Bot Email - Questnet Account Request - Wait';
+var content = new helper.Content('text/plain', 'Email Address - '+ session.userData.email +', Phone Number' + session.userData.phonenumber + ', Charge Code - ' + session.userData.chargecode);
+var mail = new helper.Mail(fromEmail, subject, toEmail, content);
+
+var sg = require('sendgrid')('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');
+var request = sg.emptyRequest({
+  method: 'POST',
+  path: '/v3/mail/send',
+  body: mail.toJSON()
+});
         //session.send("These requests are handled by a researcher who is located in Sydney, Monday-Wednesday 9:00am-3:30pm and Thursday before 11:30am if your query is more urgent please contact Knowledge Help quoting message urgent-questnet-bot.");
 //		builder.Prompts.choice(session, "How may I help you?", "ticket|cards|carousel|receipt|actions|(quit)");
 
