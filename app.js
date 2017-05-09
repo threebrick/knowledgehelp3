@@ -17,14 +17,14 @@ server.listen(process.env.port || process.env.PORT || 3978, function () {
   
 // Create chat bot
 var connector = new builder.ChatConnector({
-  //  appId: '6c6ce865-88e7-4445-86dc-6bf74befd89f',
-  //  appPassword: 'OpjSmvMw33YrLhwQsHC6U62'
- appId: process.env.MICROSOFT_APP_ID,
- appPassword: process.env.MICROSOFT_APP_PASSWORD
+    appId: '6c6ce865-88e7-4445-86dc-6bf74befd89f',
+    appPassword: 'OpjSmvMw33YrLhwQsHC6U62'
+ //appId: process.env.MICROSOFT_APP_ID,
+// appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
 var bot = new builder.UniversalBot(connector);
-server.post('/api/messages', connector.listen());
-//server.post('https://knowledgehelp3.azurewebsites.net/api/messages', connector.listen());
+//server.post('/api/messages', connector.listen());
+server.post('https://knowledgehelp3.azurewebsites.net/api/messages', connector.listen());
 
 //=========================================================
 //Dash Bot Metrics
