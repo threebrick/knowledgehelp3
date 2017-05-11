@@ -844,7 +844,8 @@ bot.dialog('/sendemailrequest', [
 // https://github.com/sendgrid/sendgrid-nodejs
 //var helper = require('sendgrid').mail;
 var fromEmail = new helper.Email('' + session.userData.email + '');
-var toEmail = new helper.Email('rkeitch@uk.ey.com');
+//var toEmail = new helper.Email('rkeitch@uk.ey.com');
+var toEmail = new helper.Email('darnell.clayton@ey.com');
 var subject = 'Knowledge Help Bot Email';
 var content = new helper.Content('text/plain', 'Request ID - '+ session.userData.requestid);
 var mail = new helper.Mail(fromEmail, subject, toEmail, content);
@@ -1155,7 +1156,7 @@ bot.dialog('/I need to arrange access to an existing site', [
 ]);
 bot.beginDialogAction('I need to arrange access to an existing site', '/I need to arrange access to an existing site for EY staff'); 
 
-
+ 
 bot.dialog('/externalclient', [
     function (session) {
         //session.send("Please contact your Engagment Administrator to arrange access. You will find the Engament Administrators names on the site's Engagement Form, which you can open by clicking on the engagement name in Request & Tracking Site (RTS) Active Engagements view. From your EYDelivers site you can also find the contacts via the Ressources link under Eng. & Project Admin.");
