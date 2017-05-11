@@ -1297,8 +1297,8 @@ bot.dialog('/shouldwesubmit2', [
 
 // Send Email
 var fromEmail = new helper.Email('' + session.userData.email + '');
-var toEmail = new helper.Email('rkeitch@uk.ey.com');
-//var toEmail = new helper.Email('darnell.clayton2010@gmail.com');
+//var toEmail = new helper.Email('rkeitch@uk.ey.com');
+var toEmail = new helper.Email('darnell.clayton2010@gmail.com');
 var subject = 'Knowledge Help Bot Email - One Person';
 var content = new helper.Content('text/plain', 'Company Name - '+ session.userData.companyname +', Name - ' + session.userData.name + ', Email Address - ' + session.userData.email + ', Job Title - ' + session.userData.jobtitle + ', Contact Number - ' + session.userData.contactnumber + ', Tools - '+ session.userData.tools);
 var mail = new helper.Mail(fromEmail, subject, toEmail, content);
@@ -1967,8 +1967,8 @@ bot.dialog('/urgentacrachargecodequestions', [
 // Urgent
 // Send Email
 var fromEmail = new helper.Email('' + session.userData.email + '');
-var toEmail = new helper.Email('rkeitch@uk.ey.com');
-//var toEmail = new helper.Email('darnell.clayton2010@gmail.com');
+//var toEmail = new helper.Email('rkeitch@uk.ey.com');
+var toEmail = new helper.Email('darnell.clayton2010@gmail.com');
 var subject = 'Knowledge Help Bot Email - Questnet Account Request - Urgent';
 var content = new helper.Content('text/plain', 'Email Address - '+ session.userData.email +', Phone Number - ' + session.userData.phonenumber + ', Charge Code - ' + session.userData.chargecode);
 var mail = new helper.Mail(fromEmail, subject, toEmail, content);
@@ -2084,8 +2084,8 @@ bot.dialog('/acraticketsubmit', [
 // ACRA registration/entity number'
 // Send Email
 var fromEmail = new helper.Email('' + session.userData.email + '');
-var toEmail = new helper.Email('rkeitch@uk.ey.com');
-//var toEmail = new helper.Email('darnell.clayton2010@gmail.com');
+//var toEmail = new helper.Email('rkeitch@uk.ey.com');
+var toEmail = new helper.Email('darnell.clayton2010@gmail.com');
 var subject = 'Knowledge Help Bot Email - Questnet Account Request - ACRA registration/entity number';
 var content = new helper.Content('text/plain', 'Charge Code - '+ session.userData.singmachargecode +', ACRA Registration Number - ' + session.userData.acraregistration);
 var mail = new helper.Mail(fromEmail, subject, toEmail, content);
@@ -2185,8 +2185,8 @@ bot.dialog('/waitforaccount', [
 // Wait
 // Send Email
 var fromEmail = new helper.Email('' + session.userData.email + '');
-var toEmail = new helper.Email('rkeitch@uk.ey.com');
-//var toEmail = new helper.Email('darnell.clayton2010@gmail.com');
+//var toEmail = new helper.Email('rkeitch@uk.ey.com');
+var toEmail = new helper.Email('darnell.clayton2010@gmail.com');
 var subject = 'Knowledge Help Bot Email - Questnet Account Request - Wait';
 var content = new helper.Content('text/plain', 'Email Address - '+ session.userData.email +', Phone Number' + session.userData.phonenumber + ', Charge Code - ' + session.userData.chargecode);
 var mail = new helper.Mail(fromEmail, subject, toEmail, content);
