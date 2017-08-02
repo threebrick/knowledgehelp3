@@ -17,14 +17,14 @@ server.listen(process.env.port || process.env.PORT || 3978, function () {
   
 // Create chat bot
 var connector = new builder.ChatConnector({
-    appId: '6c6ce865-88e7-4445-86dc-6bf74befd89f',
-    appPassword: 'OpjSmvMw33YrLhwQsHC6U62'
- //appId: process.env.MICROSOFT_APP_ID,
-// appPassword: process.env.MICROSOFT_APP_PASSWORD
+ //   appId: '6c6ce865-88e7-4445-86dc-6bf74befd89f',
+ //   appPassword: 'OpjSmvMw33YrLhwQsHC6U62'
+ appId: process.env.MICROSOFT_APP_ID,
+ appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
 var bot = new builder.UniversalBot(connector);
-//server.post('/api/messages', connector.listen());
-server.post('https://knowledgehelp3.azurewebsites.net/api/messages', connector.listen());
+server.post('/api/messages', connector.listen());
+//server.post('https://knowledgehelp3.azurewebsites.net/api/messages', connector.listen());
 
 //=========================================================
 //Dash Bot Metrics
@@ -129,10 +129,10 @@ bot.dialog('/search', [
  function (session) {
 
           
-       //     session.replaceDialog('/test');
+      
            session.beginDialog('/initialquestions2');
      
-     //   session.beginDialog('/FAQs*');
+     
 
     }
     
@@ -158,23 +158,7 @@ bot.dialog('/initialquestions', [
 ]);
 bot.beginDialogAction('initialquestions', '/initialquestions'); 
 
-//bot.dialog('/initialquestions2', [
-//    function (session) {
-//        builder.Prompts.choice(session, "Are you sure that you want to search again", "Yes|No");
-//    },
-//    function (session, results) {
-//        if (results.response && results.response.entity == 'Yes') {
-//            // Launch demo dialog
- //           console.log('Entity - ' + results.response.entity);
- //           console.log('Response - ' + results.response);
- //           session.beginDialog('/FAQs*');
- //       } else {
- //           // Exit the menu
- //           session.endDialog();
- //       }
- //   }
-//]);
-//bot.beginDialogAction('initialquestions2', '/initialquestions2'); 
+
 
 bot.dialog('/initialquestions2', [
     function (session) {
@@ -203,19 +187,7 @@ bot.dialog('/speaktoadvisor', [
 ]);
 bot.beginDialogAction('speaktoadvisor', '/speaktoadvisor'); 
 
-//bot.dialog('/search', [
-//    function (session) {
-     //   session.userData.search = "yes";
-
- //       delete session.dialogData.qnaMakerTools;
-        //delete session.dialogData;
-        //delete session.dialogData.qnaMakerResult;
-
-      //  session.endDialog('BotBuilder:Prompts');
-//        session.endDialog();
-//        session.beginDialog('/test');
-//    }
-//]).triggerAction({ matches: /^search|search again/i });   
+  
 
 bot.dialog('/test', [
     function (session) {
@@ -286,9 +258,7 @@ bot.dialog('/faqsuccess', [
 ]);
 bot.beginDialogAction('faqsuccess', '/faqsuccess'); 
 
-//bot.dialog('/PreFAQs', BasicQnAMakerDialog);
-//bot.beginDialogAction('FAQs', '/FAQs'); 
-//bot.beginDialogAction('PreFAQs', '/PreFAQs');   
+  
 
 
 bot.dialog('/PreFAQs', [
@@ -358,22 +328,7 @@ bot.beginDialogAction('Help with EY Delivers*', '/Help with EY Delivers*');
 bot.dialog('/Locating business info on Singapore or Malaysia companies*', [
     function (session) {
 
-        //var msg = new builder.Message(session)
-        //    .textFormat(builder.TextFormat.xml)
-        //    .attachments([
-        //        new builder.HeroCard(session)
-                    
-        //            .text("Questnet (www.questnet.sq) is a good source for obtaining digital copies of business profile reports and audited financial statements of companies in Singapore / Malaysia. Would you like to explore how to access Questnet content?")
-                    
-        //            .buttons([
-        //                builder.CardAction.dialogAction(session, "questnet", null, "Yes"),
-                        
-        //                builder.CardAction.dialogAction(session, "questnethowhelp", null, "No")
-        //            ])
-        //    ]);
-        //session.send(msg);
-        //session.endDialog(msg);
-
+        
         session.beginDialog('/questnetinfo');
 
     }
