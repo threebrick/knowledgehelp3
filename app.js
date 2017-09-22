@@ -3,7 +3,7 @@ var restify = require('restify');
 var builder = require('botbuilder');
 var cognitiveservices = require('botbuilder-cognitiveservices');
 var customQnAMakerTools = require('./CustomQnAMakerTools');
-var helper = require('sendgrid').mail;
+//var helper = require('sendgrid').mail;
 
 //=========================================================
 // Bot Setup
