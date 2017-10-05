@@ -246,7 +246,7 @@ bot.dialog('/faqsuccess', [
                     .text("Great! Would you like to 'Search Again', return to the 'Main Menu' or 'Exit'?")
                     
                     .buttons([
-                        builder.CardAction.dialogAction(session, "PreFAQs", "", "Search Again"),
+                        builder.CardAction.dialogAction(session, "PreFAQs", null, "Search Again"),
                         builder.CardAction.dialogAction(session, "menu", null, "Main Menu"),
                         
                         builder.CardAction.dialogAction(session, "goodbye", null, "Exit")
@@ -264,13 +264,13 @@ bot.beginDialogAction('faqsuccess', '/faqsuccess');
 bot.dialog('/PreFAQs', [
     function (session) {
 
-        if (session.userData.product == "Discover") {
-            session.beginDialog('/Help using Discover*');
-        } else if (session.userData.product == "Factiva") {
-            session.beginDialog('/Help using Factiva*');
-        } else {
-            session.beginDialog('/FAQs*');
-        }
+       // if (session.userData.product == "Discover") {
+       //     session.beginDialog('/Help using Discover*');
+       // } else if (session.userData.product == "Factiva") {
+       //     session.beginDialog('/Help using Factiva*');
+       // } else {
+            session.beginDialog('/menu');
+      //  }
 
        
 
