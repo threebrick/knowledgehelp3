@@ -92,8 +92,14 @@ bot.dialog('/', [
       //      ]);
       //  var msg = new builder.Message(session).attachments([card]);
       //  session.send(msg);
+
+      if (session.userData.test == "1") {
+          session.beginDialog('/FAQs*');
+      } else { 
+
         session.send("Hi... I'm a virtual member of the Knowledge Help team.  I'm an expert on our Knowledge tools.");
         session.beginDialog('/menu');
+        }
     },
     //function (session, results) {
         // Display menu
@@ -226,6 +232,7 @@ bot.dialog('/faqhelp', [
                         builder.CardAction.dialogAction(session, "faqfailure", null, "No")
                     ])
             ]);
+            session.send("👍    👎")
         session.send(msg);
         //session.endDialog(msg);
     }
@@ -269,6 +276,7 @@ bot.dialog('/PreFAQs', [
        // } else if (session.userData.product == "Factiva") {
        //     session.beginDialog('/Help using Factiva*');
        // } else {
+           session.userData.test = "1";
             session.beginDialog('/menu');
       //  }
 
